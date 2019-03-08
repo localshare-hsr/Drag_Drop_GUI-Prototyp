@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 
-public class Main extends Application implements EventHandler<ActionEvent> {
+public class Main extends Application {
 
   Button button;
 
@@ -23,20 +23,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     button = new Button();
     button.setText("clickme");
 
-    button.setOnAction(this);
+    button.setOnAction(e -> System.out.println("Tsdfdsaf"));
 
     StackPane layout = new StackPane();
     layout.getChildren().add(button);
 
     primaryStage.setScene(new Scene(layout, 300, 275));
     primaryStage.show();
-  }
-
-  @Override
-  public void handle(ActionEvent event) {
-    if(event.getSource() == button){
-      System.out.println("TESTETSETSTESTE");
-    }
   }
 
   public static void main(String[] args) {
