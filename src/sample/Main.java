@@ -7,29 +7,41 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
 
 public class Main extends Application {
 
-  Button button;
+  Stage window;
+  Scene scene1, scene2;
+
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-    primaryStage.setTitle("Hello World");
-    button = new Button();
-    button.setText("clickme");
+    window = primaryStage;
 
-    button.setOnAction(e -> System.out.println("Tsdfdsaf"));
+    Label label = new Label("Welcome to the First Scene");
+    Button button1 = new Button("Go To Scnene 2");
+    button1.setOnAction(e -> window.setScene(scene2));
 
-    StackPane layout = new StackPane();
-    layout.getChildren().add(button);
+    VBox layout1 = new VBox(20);
+    layout1.getChildren().addAll(label, button1);
+    scene1 = new Scene(layout1, 200, 200);
 
-    primaryStage.setScene(new Scene(layout, 300, 275));
-    primaryStage.show();
+    Button button2 = new Button("Go To Scnene 1");
+    button2.setOnAction(e -> window.setScene(scene1));
+
+    StackPane layout2 = new StackPane();
+    layout2.getChildren().add(button2);
+    scene2 = new Scene(layout2, 600, 300);
+
+    window.setScene(scene1);
+    window.setTitle("Windowtitle");
+    window.show();
   }
 
   public static void main(String[] args) {
