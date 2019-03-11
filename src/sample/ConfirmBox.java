@@ -18,9 +18,7 @@ public class ConfirmBox {
     label.setText(message);
     Button yesButton = new Button("Yes");
     Button noButton = new Button("No");
-    yesButton.setOnAction(        e -> {
-          window.close();
-        });
+    yesButton.setOnAction(e -> window.close());
 
     noButton.setOnAction(e -> window.close());
 
