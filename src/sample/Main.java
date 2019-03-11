@@ -26,14 +26,23 @@ public class Main extends Application {
     window = primaryStage;
     window.setTitle("Windowtitle");
 
-    button = new Button("Click Me!");
-    button.setOnAction(e -> AlertBox.display("WindowTitle", "Hey handsome"));
+
+    window.setOnCloseRequest(e -> closeProgamm());
+    button = new Button("Close Window");
+    button.setOnAction(e -> closeProgamm());
 
     StackPane layout = new StackPane();
     layout.getChildren().add(button);
     Scene scene = new Scene(layout, 300, 250);
     window.setScene(scene);
     window.show();
+  }
+
+  private void closeProgamm(){
+    Boolean answer = ConfirmBox.display("Title", "Sure you wanna quit?");
+    if(answer){
+      window.close();
+    }
   }
 
   public static void main(String[] args) {
