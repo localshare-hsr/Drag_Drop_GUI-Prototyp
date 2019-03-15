@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -20,44 +21,42 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     window = primaryStage;
-    window.setTitle("Windowtitle");
+    window.setTitle("thenewbutton");
 
-    GridPane grid = new GridPane();
-    grid.setPadding(new Insets(10,10,10,10)); //Insets = Padding from the edge
-    // cells itself don't have padding
-    grid.setVgap(8); // vertical gap between cells
-    grid.setHgap(10); //horizontal gap between cells
+    //Form
+    TextField nameInput = new TextField();
+    nameInput.setPromptText("Enter Text");
 
-    // Name Label
-    Label nameLabel = new Label("Username");
-    GridPane.setConstraints(nameLabel, 0,0);
 
-    //Name Input
-    TextField nameInput = new TextField("Default Text");
-    GridPane.setConstraints(nameInput, 1, 0);
+    Button button = new Button("Click Me!");
+    button.setOnAction(
+        e -> {
+          isInt(nameInput, nameInput.getText());
+          nameInput.clear();
+        });
 
-    // Password Label
-    Label passLabel = new Label("Password");
-    GridPane.setConstraints(passLabel, 0,1);
 
-    //Password Input
-    //Name Input
-    TextField passInput = new TextField();
-    passInput.setPromptText("Password");
-    GridPane.setConstraints(passInput, 1, 1);
+    // Layout
+    VBox layout = new VBox(10);
+    layout.setPadding(new Insets(20,20,20,20));
+    layout.getChildren().addAll(nameInput, button);
 
-    Button loginbutton = new Button("Login");
-    loginbutton.setOnAction(e -> System.out.println("Login Processing..."));
-    GridPane.setConstraints(loginbutton, 1,2);
-
-    grid.getChildren().addAll(nameLabel,nameInput, passInput, passLabel, loginbutton);
-
-    Scene scene = new Scene(grid, 300, 200);
-
+    Scene scene = new Scene(layout, 300, 200);
     window.setScene(scene);
     window.show();
   }
 
+  private boolean isInt(TextField input, String message){
+    try{
+      int age = Integer.parseInt(message);
+      System.out.println("User is:" + age);
+      return true;
+    }
+    catch (NumberFormatException e){
+      System.out.println("Invalid Input : " + message);
+      return false;
+    }
+  }
 
 
   public static void main(String[] args) {
