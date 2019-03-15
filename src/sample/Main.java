@@ -4,61 +4,51 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 public class Main extends Application {
 
   private Stage window;
-  Button button;
 
 
   @Override
   public void start(Stage primaryStage) throws Exception {
     window = primaryStage;
-    window.setTitle("thenewbutton");
-
-    //Form
-    TextField nameInput = new TextField();
-    nameInput.setPromptText("Enter Text");
+    window.setTitle("checkbox");
 
 
-    Button button = new Button("Click Me!");
-    button.setOnAction(
-        e -> {
-          isInt(nameInput, nameInput.getText());
-          nameInput.clear();
-        });
+    // checkbox
+      CheckBox box1 = new CheckBox("Bacon");
+      CheckBox box2 = new CheckBox("Tuna");
+      box2.setSelected(true);
 
+      Button button = new Button("Order now");
 
-    // Layout
-    VBox layout = new VBox(10);
-    layout.setPadding(new Insets(20,20,20,20));
-    layout.getChildren().addAll(nameInput, button);
+      button.setOnAction(e -> handleOptions(box1, box2));
+      // Layout
+    VBox layout1 = new VBox(10);
+    layout1.setPadding(new Insets(20, 20, 20, 20));
+    layout1.getChildren().addAll(box1, box2, button);
 
-    Scene scene = new Scene(layout, 300, 200);
+    Scene scene = new Scene(layout1, 300, 200);
     window.setScene(scene);
     window.show();
   }
 
-  private boolean isInt(TextField input, String message){
-    try{
-      int age = Integer.parseInt(message);
-      System.out.println("User is:" + age);
-      return true;
-    }
-    catch (NumberFormatException e){
-      System.out.println("Invalid Input : " + message);
-      return false;
-    }
+  private void handleOptions(CheckBox box1, CheckBox box2){
+      String message = "Your Sub contains: ";
+
+      if(box1.isSelected()){
+          message += "Bacon ";
+      }
+      if(box2.isSelected()){
+          message += "Tuna ";
+      }
+
+    System.out.println(message);
   }
-
-
   public static void main(String[] args) {
     launch(args);
   }
