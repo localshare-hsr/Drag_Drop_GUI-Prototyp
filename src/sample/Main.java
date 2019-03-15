@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,13 +21,19 @@ public class Main extends Application {
 
     ChoiceBox<String> chbox = new ChoiceBox();
 
+
+
     // get Items
     chbox.getItems().add("Apples");
     chbox.getItems().addAll("Kiwi", "Bacon", "Peach");
-
     chbox.setValue("Apples");
 
-    button.setOnAction(e -> getChoide(chbox));
+    // Listen for Selection Change in Dropdown
+    chbox
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener((v, oldvalue, newvalue) -> System.out.println(newvalue));
+
     // Layout
     VBox layout1 = new VBox(10);
     layout1.setPadding(new Insets(20, 20, 20, 20));
@@ -39,10 +44,6 @@ public class Main extends Application {
     window.show();
   }
 
-  private void getChoide(ChoiceBox<String> box) {
-    String food = box.getValue();
-    System.out.println(food);
-  }
 
   public static void main(String[] args) {
     launch(args);
