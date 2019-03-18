@@ -1,50 +1,64 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
   private Stage window;
-  private ListView<String> listview;
+  private TreeView<String> tree;
+
 
   @Override
   public void start(Stage primaryStage) throws Exception {
     window = primaryStage;
-    window.setTitle("checkbox");
+    window.setTitle("treeview");
 
-    Button button = new Button("Click Me");
-    listview = new ListView<>();
-    listview.getItems().addAll("Iron Man", "Titanic", "Contact");
-    listview.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    TreeItem<String> root, bucky ,meghan;
 
-    button.setOnAction(e -> buttonClicked());
+    root = new TreeItem<>();
+    root.setExpanded(true);
 
-    // Layout
-    VBox layout1 = new VBox(10);
-    layout1.setPadding(new Insets(20, 20, 20, 20));
-    layout1.getChildren().addAll(listview, button);
+    //bucky
+    bucky = makeBranch("bucky", root);
+    makeBranch("test1", bucky);
+    makeBranch("test2", bucky);
 
-    Scene scene = new Scene(layout1, 300, 200);
+
+    //meghan
+    meghan = makeBranch("meghan", root);
+    makeBranch("test3", meghan);
+    makeBranch("test4", meghan);
+
+    //Create Tree
+    tree = new TreeView<>(root);
+
+    // IF not False --> node for root is created and not expanded.
+    tree.setShowRoot(false);
+    tree.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newvalue) -> {
+      if(newvalue != null){
+        System.out.println(newvalue.getValue());
+      }
+    });
+
+
+    StackPane layout = new StackPane();
+    layout.getChildren().add(tree);
+    Scene scene = new Scene(layout, 300, 200);
     window.setScene(scene);
     window.show();
   }
 
-  private void buttonClicked() {
-    String message = "";
-    ObservableList<String> movies;
-    movies = listview.getSelectionModel().getSelectedItems();
-
-    for (String m : movies) {
-      message += m + "\n";
-    }
-
-    System.out.println(message);
+  // create Braches
+  public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
+    TreeItem<String> item = new TreeItem<>(title);
+    item.setExpanded(true);
+    parent.getChildren().add(item);
+    return item;
   }
 
   public static void main(String[] args) {
