@@ -1,64 +1,67 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
   private Stage window;
-  private TreeView<String> tree;
-
+  private TableView<Product> table;
 
   @Override
   public void start(Stage primaryStage) throws Exception {
     window = primaryStage;
-    window.setTitle("treeview");
+    window.setTitle("TableView");
 
-    TreeItem<String> root, bucky ,meghan;
+    // Name Column
+    TableColumn<Product, String> namecolumn = new TableColumn<>("Name");
+    namecolumn.setMinWidth(200);
+    namecolumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
 
-    root = new TreeItem<>();
-    root.setExpanded(true);
+    // Price Column
+    TableColumn<Product, Double> pricecolumn = new TableColumn<>("Price");
+    pricecolumn.setMinWidth(200);
+    pricecolumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
-    //bucky
-    bucky = makeBranch("bucky", root);
-    makeBranch("test1", bucky);
-    makeBranch("test2", bucky);
+    // Quantity Column
+    TableColumn<Product, Integer> quantitycolumn = new TableColumn<>("Quantity");
+    quantitycolumn.setMinWidth(200);
+    quantitycolumn.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+
+    table = new TableView<>();
+    table.setItems(getProcuct());
+    table.getColumns().addAll(namecolumn, pricecolumn, quantitycolumn);
 
 
-    //meghan
-    meghan = makeBranch("meghan", root);
-    makeBranch("test3", meghan);
-    makeBranch("test4", meghan);
 
-    //Create Tree
-    tree = new TreeView<>(root);
-
-    // IF not False --> node for root is created and not expanded.
-    tree.setShowRoot(false);
-    tree.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newvalue) -> {
-      if(newvalue != null){
-        System.out.println(newvalue.getValue());
-      }
-    });
-
+    VBox vBox = new VBox();
+    vBox.getChildren().addAll(table);
 
     StackPane layout = new StackPane();
-    layout.getChildren().add(tree);
-    Scene scene = new Scene(layout, 300, 200);
+
+    Scene scene = new Scene(vBox);
     window.setScene(scene);
     window.show();
   }
 
-  // create Braches
-  public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
-    TreeItem<String> item = new TreeItem<>(title);
-    item.setExpanded(true);
-    parent.getChildren().add(item);
-    return item;
+  public ObservableList<Product> getProcuct() {
+    ObservableList<Product> products = FXCollections.observableArrayList();
+    products.add(new Product("Laptop", 850, 5));
+    products.add(new Product("Ball", 0.4, 58));
+    products.add(new Product("Toilet", 99, 10));
+    products.add(new Product("Cap", 50, 8));
+    products.add(new Product("Server", 1000, 45));
+  return products;
   }
 
   public static void main(String[] args) {
