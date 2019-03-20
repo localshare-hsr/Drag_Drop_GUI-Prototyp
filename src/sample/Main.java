@@ -47,8 +47,19 @@ public class Main extends Application {
     GridPane.setConstraints(passInput, 1, 1);
 
     Button loginbutton = new Button("Login");
-    loginbutton.setOnAction(e -> System.out.println("Login Processing..."));
+    loginbutton.setOnAction(e -> {
+            if(getUserAgentStylesheet() == STYLESHEET_MODENA){
+              setUserAgentStylesheet(STYLESHEET_CASPIAN);
+            }
+            else{
+              setUserAgentStylesheet(STYLESHEET_MODENA);
+            }
+
+
+    });
     GridPane.setConstraints(loginbutton, 1,2);
+
+
 
     grid.getChildren().addAll(nameLabel,nameInput, passInput, passLabel, loginbutton);
 
