@@ -1,113 +1,60 @@
 package ch.hsr.epj.guiprototyp;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
   private Stage window;
-  private TableView<Product> table;
-  private TextField nameInput, priceInput, quantityInput;
+  private BorderPane layout;
 
   @Override
   public void start(Stage primaryStage) throws Exception {
     window = primaryStage;
-    window.setTitle("TableView");
+    window.setTitle("Create Menus");
 
-    // Name Column
-    TableColumn<Product, String> namecolumn = new TableColumn<>("Name");
-    namecolumn.setMinWidth(200);
-    namecolumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
+    // filemenu
+    Menu filemenu = new Menu("File");
 
-    // Price Column
-    TableColumn<Product, Double> pricecolumn = new TableColumn<>("Price");
-    pricecolumn.setMinWidth(200);
-    pricecolumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
+    // menuitems ".." einfügen wenn neue Dialoge geöffnet werden.
+    MenuItem newFile = new MenuItem("new File");
+    newFile.setOnAction(e -> System.out.println("New File"));
 
-    // Quantity Column
-    TableColumn<Product, Integer> quantitycolumn = new TableColumn<>("Quantity");
-    quantitycolumn.setMinWidth(200);
-    quantitycolumn.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+    filemenu.getItems().add(newFile);
+    filemenu.getItems().add(new MenuItem("Bla.."));
+    filemenu.getItems().add(new MenuItem("BlaBla.."));
+    filemenu.getItems().add(new MenuItem("Settings.."));
+    filemenu.getItems().add(new SeparatorMenuItem());
+    filemenu.getItems().add(new MenuItem("Exit"));
 
-    // name input
-    nameInput = new TextField();
-    nameInput.setPromptText("Name");
-    nameInput.setMinWidth(100);
+    // filemenu mit _ vor Name lässt sich dropdown wia alt + e öffnen
+    Menu edit = new Menu("_Edit");
+    edit.getItems().add(new MenuItem("UndoTyping"));
+    edit.getItems().add(new MenuItem("Copy"));
 
-    // price input
-    priceInput = new TextField();
-    priceInput.setPromptText("Price");
-    priceInput.setMinWidth(100);
+    // disable Paste
+    MenuItem paste = new MenuItem("Paste");
+    paste.setDisable(true);
+    newFile.setOnAction(e -> System.out.println("New File"));
+    edit.getItems().add(paste);
 
-    // quantity input
-    quantityInput = new TextField();
-    quantityInput.setPromptText("Quantity");
-    quantityInput.setMinWidth(100);
 
-    table = new TableView<>();
-    table.setItems(getProcuct());
-    table.getColumns().addAll(namecolumn, pricecolumn, quantitycolumn);
+    // Main Menubar
+    MenuBar menubar = new MenuBar();
+    menubar.getMenus().addAll(filemenu, edit);
 
-    // Button
-    Button add = new Button("Add");
-    add.setOnAction(e -> addButtonClicked());
-    Button delete = new Button("Delete");
-    delete.setOnAction(e -> deleteButtonClicked());
+    layout = new BorderPane();
+    layout.setTop(menubar);
 
-    HBox hbox = new HBox();
-    hbox.setPadding(new Insets(10, 10, 10, 10));
-    hbox.setSpacing(10);
-    hbox.getChildren().addAll(nameInput, priceInput, quantityInput, add, delete);
-
-    VBox vBox = new VBox();
-    vBox.getChildren().addAll(table, hbox);
-
-    StackPane layout = new StackPane();
-
-    Scene scene = new Scene(vBox);
+    Scene scene = new Scene(layout, 400, 300);
     window.setScene(scene);
     window.show();
-  }
-
-  private ObservableList<Product> getProcuct() {
-    ObservableList<Product> products = FXCollections.observableArrayList();
-    products.add(new Product("Laptop", 850, 5));
-    products.add(new Product("Ball", 0.4, 58));
-    products.add(new Product("Toilet", 99, 10));
-    products.add(new Product("Cap", 50, 8));
-    products.add(new Product("Server", 1000, 45));
-    return products;
-  }
-
-  private void addButtonClicked(){
-    Product product = new Product();
-    product.setName(nameInput.getText());
-    product.setPrice(Double.parseDouble(priceInput.getText()));
-    product.setQuantity(Integer.parseInt(quantityInput.getText()));
-    table.getItems().add(product);
-    nameInput.clear();
-    priceInput.clear();
-    quantityInput.clear();
-  }
-
-  private void deleteButtonClicked(){
-    ObservableList<Product> productselected, allproducts;
-    allproducts = table.getItems();
-    productselected = table.getSelectionModel().getSelectedItems();
-
-    productselected.forEach(allproducts::remove);
   }
 
   public static void main(String[] args) {
