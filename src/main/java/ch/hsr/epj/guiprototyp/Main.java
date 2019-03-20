@@ -2,12 +2,14 @@ package ch.hsr.epj.guiprototyp;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class Main extends Application {
 
@@ -45,9 +47,27 @@ public class Main extends Application {
     edit.getItems().add(paste);
 
 
+    // Helpmenu mit checkboxen
+    Menu help = new Menu("_Help");
+    CheckMenuItem line = new CheckMenuItem("Show Line Numbers");
+    line.setOnAction(e -> {
+            if(line.isSelected()) {
+              System.out.println("Programm will list linenumbers");
+    }
+            else{
+              System.out.println("No Linenumbers displayed");
+            }
+              });
+
+    //Menu Item Default Selected
+    CheckMenuItem autosave = new CheckMenuItem("Autosave");
+    autosave.setSelected(true);
+    help.getItems().addAll(line, autosave);
+
+
     // Main Menubar
     MenuBar menubar = new MenuBar();
-    menubar.getMenus().addAll(filemenu, edit);
+    menubar.getMenus().addAll(filemenu, edit, help);
 
     layout = new BorderPane();
     layout.setTop(menubar);
