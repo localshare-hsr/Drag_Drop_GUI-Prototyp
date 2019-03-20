@@ -46,28 +46,39 @@ public class Main extends Application {
     newFile.setOnAction(e -> System.out.println("New File"));
     edit.getItems().add(paste);
 
-
     // Helpmenu mit checkboxen
     Menu help = new Menu("_Help");
     CheckMenuItem line = new CheckMenuItem("Show Line Numbers");
-    line.setOnAction(e -> {
-            if(line.isSelected()) {
-              System.out.println("Programm will list linenumbers");
-    }
-            else{
-              System.out.println("No Linenumbers displayed");
-            }
-              });
+    line.setOnAction(
+        e -> {
+          if (line.isSelected()) {
+            System.out.println("Programm will list linenumbers");
+          } else {
+            System.out.println("No Linenumbers displayed");
+          }
+        });
 
-    //Menu Item Default Selected
+    // Menu Item Default Selected
     CheckMenuItem autosave = new CheckMenuItem("Autosave");
     autosave.setSelected(true);
     help.getItems().addAll(line, autosave);
 
+    // Layout Radionmenuitem Enum auswahl.
+    Menu layoutmenu = new Menu("Layout");
+    ToggleGroup layoutToggle = new ToggleGroup();
+
+    RadioMenuItem dark = new RadioMenuItem("dark");
+    RadioMenuItem light = new RadioMenuItem("light");
+    RadioMenuItem pink = new RadioMenuItem("pink");
+
+    dark.setToggleGroup(layoutToggle);
+    light.setToggleGroup(layoutToggle);
+    pink.setToggleGroup(layoutToggle);
+    layoutmenu.getItems().addAll(dark, light, pink);
 
     // Main Menubar
     MenuBar menubar = new MenuBar();
-    menubar.getMenus().addAll(filemenu, edit, help);
+    menubar.getMenus().addAll(filemenu, edit, help, layoutmenu);
 
     layout = new BorderPane();
     layout.setTop(menubar);
