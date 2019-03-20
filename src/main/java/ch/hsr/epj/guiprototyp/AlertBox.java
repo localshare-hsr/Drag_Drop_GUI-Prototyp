@@ -1,4 +1,4 @@
-package sample;
+package ch.hsr.epj.guiprototyp;
 
 import javafx.stage.*;
 import javafx.scene.*;

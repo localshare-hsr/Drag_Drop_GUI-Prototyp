@@ -1,4 +1,4 @@
-package sample;
+package ch.hsr.epj.guiprototyp;
 
 public class Product {
 
@@ -6,13 +6,13 @@ public class Product {
     private double price;
     private int quantity;
 
-    public Product(){
+    Product(){
         this.name = "";
         this.price = 0;
         this.quantity = 0;
     }
 
-    public Product(String name, double price, int quantity) {
+    Product(String name, double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -30,7 +30,7 @@ public class Product {
         return price;
     }
 
-    public void setPrice(double price) {
+    void setPrice(double price) {
         this.price = price;
     }
 
@@ -38,7 +38,7 @@ public class Product {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }
