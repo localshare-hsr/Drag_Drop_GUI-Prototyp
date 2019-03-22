@@ -1,5 +1,4 @@
 
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -27,6 +26,7 @@ public class Main extends Application {
 
     // Name Label
     Label nameLabel = new Label("Username");
+    nameLabel.setId("bold-label");
     GridPane.setConstraints(nameLabel, 0, 0);
 
     // Name Input
@@ -54,7 +54,13 @@ public class Main extends Application {
         });
     GridPane.setConstraints(loginbutton, 1, 2);
 
-    grid.getChildren().addAll(nameLabel, nameInput, passInput, passLabel, loginbutton);
+    //signup button
+    Button signupbutton = new Button("Sign Up");
+    signupbutton.getStyleClass().add("button-blue");
+    GridPane.setConstraints(signupbutton, 1, 3);
+
+
+    grid.getChildren().addAll(nameLabel, nameInput, passInput, passLabel, loginbutton, signupbutton);
 
     Scene scene = new Scene(grid, 300, 200);
     scene.getStylesheets().add(getClass().getResource("Viper.css").toExternalForm());
