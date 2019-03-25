@@ -3,6 +3,8 @@ package ch.hsr.epj.localshare.gui_prototyp;
 
 import ch.hsr.epj.localshare.gui_prototyp.Person;
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,44 +15,49 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-  private Stage window;
-  Button button;
+    private Stage window;
+    Button button;
 
-  @Override
-  public void start(Stage primaryStage) throws Exception {
-    window = primaryStage;
-    window.setTitle("Windowtitle");
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        window = primaryStage;
+        window.setTitle("Windowtitle");
 
-    Person martin = new Person();
+        Person martin = new Person();
 
-    martin.firstNameProperty().addListener((v, oldValue, newValue) -> {
-      System.out.println("Name Changed to: " + newValue);
-      System.out.println("firstNameProperty(): " + martin.firstNameProperty());
-      System.out.println("getFirstname(): " + martin.getFirstName());
-    });
+        martin.firstNameProperty().addListener((v, oldValue, newValue) -> {
+            System.out.println("Name Changed to: " + newValue);
+            System.out.println("firstNameProperty(): " + martin.firstNameProperty());
+            System.out.println("getFirstname(): " + martin.getFirstName());
+        });
 
+        IntegerProperty x = new SimpleIntegerProperty(3);
+        IntegerProperty y = new SimpleIntegerProperty();
 
-    GridPane grid = new GridPane();
-    grid.setPadding(new Insets(10, 10, 10, 10)); // Insets = Padding from the edge
-    // cells itself don't have padding
-    grid.setVgap(8); // vertical gap between cells
-    grid.setHgap(10); // horizontal gap between cells
+        y.bind(x.multiply(10));
 
-    //Change firstName
-    Button signupbutton = new Button("Sign Up");
+        System.out.println("x" + x.getValue() + "y" + y.getValue());
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10)); // Insets = Padding from the edge
+        // cells itself don't have padding
+        grid.setVgap(8); // vertical gap between cells
+        grid.setHgap(10); // horizontal gap between cells
 
-    GridPane.setConstraints(signupbutton, 1, 3);
+        //Change firstName
+        Button signupbutton = new Button("Sign Up");
 
-    signupbutton.setOnAction(e -> martin.setFirstName("Märti"));
+        GridPane.setConstraints(signupbutton, 1, 3);
 
-    grid.getChildren().addAll(signupbutton);
+        signupbutton.setOnAction(e -> martin.setFirstName("Märti"));
 
-    Scene scene = new Scene(grid, 300, 200);
-    window.setScene(scene);
-    window.show();
-  }
+        grid.getChildren().addAll(signupbutton);
 
-  public static void main(String[] args) {
-    launch(args);
-  }
+        Scene scene = new Scene(grid, 300, 200);
+        window.setScene(scene);
+        window.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
